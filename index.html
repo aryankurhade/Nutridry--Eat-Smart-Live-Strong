@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NutriDry — Preserving Nature, Delivering Nutrition</title>
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand-orange:#c9804c;
+    --brand-green:#21a351;
+    --bg-hero-start: #fff7ed;
+    --bg-hero-end: #fff0e6;
+    --card-shadow: 0 8px 30px rgba(16,24,40,0.08);
+  }
+  body{font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:linear-gradient(180deg,#fbfbfb 0%, #f7faf9 100%); color:#0f172a;}
+  .logo-img{height:56px; width:auto}
+  .product-img{height:160px;object-fit:cover}
+  .hidden-section{display:none}
+  .glass{background:rgba(255,255,255,0.75);backdrop-filter:blur(6px)}
+  .card-shadow{box-shadow: var(--card-shadow); border-radius:12px;}
+  /* hero vegetable pattern (subtle) */
+  .hero-veg { background: linear-gradient(90deg, rgba(249,115,22,0.06), rgba(22,163,74,0.02)), radial-gradient(400px 200px at 10% 20%, rgba(22,163,74,0.04), transparent 20%), radial-gradient(300px 160px at 90% 80%, rgba(249,115,22,0.03), transparent 20%); }
+
+  /* NutriDry brand text */
+  .brand-text{font-weight:700;font-size:1.05rem;display:inline-flex;gap:0.08rem;align-items:center}
+  .brand-text .n{color:var(--brand-green)}
+  .brand-text .d{color:var(--brand-orange)}
+  .brand-slogan{font-size:0.85rem;color:#065f46} /* dark green text for slogan baseline */
+
+  /* Hero centered big brand */
+  .hero-brand {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:36px;
+    border-radius:12px;
+    background:linear-gradient(135deg, rgba(201,129,76,0.06), rgba(33,163,81,0.04));
+    border:1px solid rgba(0,0,0,0.02);
+  }
+  .hero-brand .brand-lg { font-size:2.6rem; font-weight:800; letter-spacing:0.6px; display:inline-flex; align-items:center; gap:0.6rem; }
+  .brand-lg .n{font-size:2.6rem}
+  .brand-lg .d{font-size:2.6rem}
+
+  /* make capital letters green in slogan */
+  .slogan .cap { color:var(--brand-green); font-weight:700; }
+
+  @media (max-width:640px){
+    .product-img{height:120px}
+    .logo-img{height:44px}
+    .brand-lg{font-size:1.7rem}
+  }
+  .round-avatar{width:72px;height:72px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-weight:600;color:white}
+  .about-heading{text-align:center}
+  .about-center { text-align:center; display:flex; flex-direction:column; align-items:center; gap:1rem; }
+  .bigger-card { padding:1.5rem; border-radius:14px; box-shadow: var(--card-shadow); min-height:160px; }
+  .team-card { padding:1.25rem; border-radius:14px; box-shadow: var(--card-shadow); min-height:170px; }
+  /* packaging flow */
+  .flow-chart { width:100%; max-width:720px; margin:auto; }
+  .flow-box { fill:#fff; stroke:#eee; stroke-width:1; rx:10; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<div id="app" class="min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="glass sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
+      <a href="#home" class="flex items-center gap-3" onclick="router('#home')">
+        <!-- Use your resource folder logo image (place the file at /resources/nutridry-mark.png or update path below) -->
+        <img src="/resources/nutridry-mark.png" alt="NutriDry mark" class="logo-img" onerror="this.style.display='none'"/>
+        <div class="hidden sm:block">
+          <!-- Brand text with N green and D orange -->
+          <div class="brand-text">
+            <span class="n">N</span>utri<span class="d">D</span>ry
+          </div>
+          <div class="text-sm brand-slogan">
+            <!-- Each capital letter in the slogan is highlighted in green -->
+            <span class="slogan"><span class="cap">E</span>at <span class="cap">S</span>mart, <span class="cap">L</span>ive <span class="cap">S</span>trong</span>
+          </div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-3 text-sm">
+        <a href="#home" class="px-3 py-2 rounded hover:bg-orange-50" onclick="router('#home')">Home</a>
+        <a href="#products" class="px-3 py-2 rounded hover:bg-orange-50" onclick="router('#products')">Products</a>
+        <a href="#about" class="px-3 py-2 rounded hover:bg-orange-50" onclick="router('#about')">About</a>
+        <a href="#packaging" class="px-3 py-2 rounded hover:bg-orange-50" onclick="router('#packaging')">Packaging</a>
+        <a href="#contact" class="px-3 py-2 rounded hover:bg-orange-50" onclick="router('#contact')">Contact</a>
+        <a href="#cart" class="flex items-center gap-2 px-3 py-2 rounded bg-[var(--brand-green)] text-white" onclick="router('#cart')">
+          Cart <span id="cart-count" class="ml-2 bg-white/20 px-2 py-0.5 rounded text-sm">0</span>
+        </a>
+      </nav>
+
+      <div class="md:hidden flex items-center gap-2">
+        <button class="p-2 rounded" onclick="toggleMobileMenu()" aria-label="menu">☰</button>
+        <a href="#cart" class="flex items-center gap-2 px-3 py-2 rounded bg-[var(--brand-green)] text-white" onclick="router('#cart')">
+          🛒 <span id="cart-count-m" class="ml-1 bg-white/20 px-2 py-0.5 rounded text-sm">0</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- mobile nav -->
+    <div id="mobile-nav" class="max-w-6xl mx-auto px-4 hidden md:hidden">
+      <div class="flex flex-col gap-2 py-3">
+        <a href="#products" onclick="router('#products'); toggleMobileMenu()">Products</a>
+        <a href="#about" onclick="router('#about'); toggleMobileMenu()">About</a>
+        <a href="#packaging" onclick="router('#packaging'); toggleMobileMenu()">Packaging</a>
+        <a href="#contact" onclick="router('#contact'); toggleMobileMenu()">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="flex-1">
+    <div class="max-w-6xl mx-auto p-4">
+
+      <!-- HOME -->
+      <section id="home" class="section">
+        <div class="grid lg:grid-cols-2 gap-6 items-center">
+          <div>
+            <h1 class="text-3xl sm:text-4xl font-bold" style="color:var(--brand-orange)">NutriDry — <span class="text-amber-700">Eat smart, live strong</span></h1>
+            <p class="mt-3 text-lg text-slate-700">Natural, farm-sourced dehydrated powders — convenient nutrition that lasts. We turn surplus produce into premium, shelf-stable powders for kitchens and businesses.</p>
+
+            <div class="mt-5 flex gap-3">
+              <button class="px-5 py-3" style="background:var(--brand-orange);color:#fff;border-radius:8px" onclick="router('#products')">Shop Now</button>
+              <button class="px-5 py-3 border rounded" onclick="router('#about')">Learn More</button>
+            </div>
+          </div>
+
+          <!-- hero visual -->
+          <div class="relative rounded-lg overflow-hidden shadow-lg hero-veg" style="min-height:260px;">
+            <svg viewBox="0 0 800 400" class="w-full h-full" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <defs>
+                <linearGradient id="gHero" x1="0" x2="1">
+                  <stop offset="0" stop-color="#fff7ed"/>
+                  <stop offset="1" stop-color="#fff0e6"/>
+                </linearGradient>
+              </defs>
+              <rect width="800" height="400" fill="url(#gHero)"/>
+              <!-- simple vegetable illustration -->
+              <g transform="translate(60,30)" opacity="0.95">
+                <ellipse cx="220" cy="240" rx="120" ry="60" fill="#fff3e0" />
+                <g transform="translate(40,10)">
+                  <path d="M80 120 q50 -80 160 -50 q-40 20 -40 80 q-90 -5 -120 -30z" fill="#ffedd5"/>
+                  <circle cx="240" cy="80" r="40" fill="#f97316"/>
+                  <ellipse cx="200" cy="70" rx="30" ry="18" fill="#16a34a"/>
+                  <rect x="320" y="90" width="120" height="150" rx="14" fill="#fff" stroke="#f0f0f0"/>
+                </g>
+              </g>
+            </svg>
+
+            <!-- center brand overlay replacing the checklist -->
+            <div class="absolute inset-0 flex items-center justify-center p-6">
+              <div class="hero-brand">
+                <!-- if logo image exists, it will show; otherwise textual brand appears -->
+                <img src="/resources/nutridry-full.png" alt="NutriDry" class="h-20" style="display:block" onerror="this.style.display='none'"/>
+                <div class="brand-lg" style="display:flex; align-items:center; gap:10px;">
+                  <span style="font-weight:800; font-family:'Poppins',sans-serif;">
+                    <span class="n">N</span>utri<span class="d">D</span>ry
+                  </span>
+                </div>
+                <div class="slogan text-lg" style="color:rgba(4,75,46,0.85);">
+                  <span class="cap">E</span>at <span class="cap">S</span>mart, <span class="cap">L</span>ive <span class="cap">S</span>trong
+                </div>
+                <div class="text-sm text-slate-600">From farms to your kitchen • Natural | Sustainable</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured products grid on home (larger cards) -->
+        <section class="mt-12">
+          <h2 class="text-2xl font-semibold mb-4">Featured Products</h2>
+          <div id="home-products" class="grid sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+        </section>
+      </section>
+
+      <!-- PRODUCTS -->
+      <section id="products" class="section hidden-section mt-6">
+        <div class="flex items-center justify-between">
+          <h1 class="text-2xl font-bold">Our Products</h1>
+          <div class="text-sm">Click a product to view details</div>
+        </div>
+        <div id="products-list" class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4"></div>
+      </section>
+
+      <!-- PRODUCT DETAIL -->
+      <section id="product-page" class="section hidden-section mt-6">
+        <div id="product-detail" class="bg-white p-4 rounded shadow"></div>
+
+        <!-- Similar / other products displayed below when viewing a product -->
+        <div id="product-related" class="mt-6"></div>
+      </section>
+
+      <!-- CART -->
+      <section id="cart" class="section hidden-section mt-6">
+        <h1 class="text-2xl font-bold mb-4">Your Cart</h1>
+        <div id="cart-items" class="space-y-4"></div>
+        <div class="mt-6 text-right">
+          <div class="text-lg">Total: ₹<span id="cart-total">0</span></div>
+          <div class="mt-3">
+            <button class="px-4 py-2 bg-[var(--brand-green)] text-white rounded" onclick="router('#checkout')">Proceed to Checkout</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHECKOUT -->
+      <section id="checkout" class="section hidden-section mt-6">
+        <h1 class="text-2xl font-bold mb-4">Checkout</h1>
+        <form id="checkout-form" class="bg-white p-6 rounded shadow max-w-2xl">
+          <div class="grid gap-3">
+            <input type="text" id="c_name" placeholder="Full Name" class="border p-2 rounded" required>
+            <input type="tel" id="c_mobile" placeholder="Mobile Number" class="border p-2 rounded" required>
+            <input type="email" id="c_email" placeholder="Email (optional)" class="border p-2 rounded">
+            <textarea id="c_address" placeholder="Delivery Address" class="border p-2 rounded" rows="3" required></textarea>
+            <div>
+              <label class="font-medium">Payment Method</label>
+              <select id="c_payment" class="w-full border p-2 rounded mt-1">
+                <option value="cod">Cash on Delivery</option>
+                <option value="upi">UPI / Wallet (mock)</option>
+                <option value="card">Card (mock)</option>
+              </select>
+            </div>
+            <div class="flex gap-3">
+              <button type="submit" class="px-4 py-2 bg-[var(--brand-green)] text-white rounded">Pay & Place Order</button>
+              <button type="button" class="px-4 py-2 border rounded" onclick="router('#cart')">Back to Cart</button>
+            </div>
+          </div>
+        </form>
+
+        <div id="receipt" class="mt-6 hidden bg-white p-6 rounded shadow max-w-2xl"></div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="section hidden-section mt-6">
+        <h1 class="text-3xl font-bold about-heading">About VVHP Agro Food LLP — NutriDry</h1>
+        <p class="mt-4 text-slate-700 about-center" style="max-width:850px; font-size:1.05rem;">VVHP Agro Food LLP is a farmer-forward enterprise focused on reducing post-harvest losses and delivering nutrient-dense, shelf-stable food solutions. Under the NutriDry brand, we turn surplus and seasonal produce into high-quality dehydrated powders that are convenient for homes, cafeterias, and food service businesses.</p>
+
+        <div class="mt-4 grid md:grid-cols-2 gap-6">
+          <div class="bigger-card bg-white">
+            <h2 class="font-semibold text-xl text-center">Mission</h2>
+            <ul class="mt-2 list-disc pl-5 text-slate-700 text-lg">
+              <li>Empower smallholder farmers with fair procurement and steady demand.</li>
+              <li>Reduce food waste through gentle dehydration and cold-processing methods.</li>
+              <li>Provide accessible, nutrient-rich products that fit modern kitchens.</li>
+            </ul>
+          </div>
+          <div class="bigger-card bg-white">
+            <h2 class="font-semibold text-xl text-center">Vision</h2>
+            <ul class="mt-2 list-disc pl-5 text-slate-700 text-lg">
+              <li>Be a trusted name in natural, traceable, and sustainable food ingredients.</li>
+              <li>Scale impact by training farmers and creating decentralised drying hubs.</li>
+              <li>Champion transparent supply chains and environmentally responsible packaging.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Owners -->
+        <div class="mt-6">
+          <h2 class="font-semibold text-2xl about-heading">Founders & Management</h2>
+          <div class="mt-3 grid sm:grid-cols-2 gap-4">
+            <div class="bg-white p-6 rounded bigger-card flex gap-4 items-center">
+              <div class="w-24 h-24 rounded-full bg-[var(--brand-orange)] flex items-center justify-center text-white text-2xl font-semibold">VK</div>
+              <div>
+                <div class="font-semibold text-lg">Mr. Hanumant Pawar</div>
+                <div class="text-sm text-slate-600">Co-Founder & Managing Director</div>
+                <div class="text-sm mt-2 text-slate-700">Oversees strategy, farmer partnerships and business development.</div>
+              </div>
+            </div>
+            <div class="bg-white p-6 rounded bigger-card flex gap-4 items-center">
+              <div class="w-24 h-24 rounded-full bg-[var(--brand-green)] flex items-center justify-center text-white text-2xl font-semibold">RD</div>
+              <div>
+                <div class="font-semibold text-lg">Mrs. Poonam Pawar</div>
+                <div class="text-sm text-slate-600">Co-Founder,Finance & Administration Head</div>
+                <div class="text-sm mt-2 text-slate-700">Leads production, quality and supply chain operations.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team -->
+        <div class="mt-6">
+          <h2 class="font-semibold text-2xl about-heading">Our Team</h2>
+          <p class="text-sm text-slate-600 mt-1 about-center">A cross-functional team working across production, quality, marketing and logistics.</p>
+
+          <div class="mt-4 grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <!-- Production -->
+            <div class="bg-white p-4 rounded team-card">
+              <div class="flex items-center gap-3">
+                <div class="round-avatar" style="background:#16a34a">SP</div>
+                <div>
+                  <div class="font-semibold text-lg">name of employee</div>
+                  <div class="text-sm text-slate-600">Head — Production</div>
+                </div>
+              </div>
+              <div class="mt-2 text-sm text-slate-600">Manages drying lines, packaging & process improvements.</div>
+            </div>
+
+            <!-- Quality & R&D -->
+            <div class="bg-white p-4 rounded team-card">
+              <div class="flex items-center gap-3">
+                <div class="round-avatar" style="background:#f97316">AR</div>
+                <div>
+                  <div class="font-semibold text-lg">name of employee</div>
+                  <div class="text-sm text-slate-600">Quality & R&D Lead</div>
+                </div>
+              </div>
+              <div class="mt-2 text-sm text-slate-600">Ensures product safety, shelf-life tests and new product trials.</div>
+            </div>
+
+            <!-- Marketing & Sales -->
+            <div class="bg-white p-4 rounded team-card">
+              <div class="flex items-center gap-3">
+                <div class="round-avatar" style="background:#6b21a8">MK</div>
+                <div>
+                  <div class="font-semibold text-lg">name of employee</div>
+                  <div class="text-sm text-slate-600">Head — Marketing & Sales</div>
+                </div>
+              </div>
+              <div class="mt-2 text-sm text-slate-600">Leads market strategy, trade partnerships and digital presence.</div>
+            </div>
+
+            <!-- Logistics & Procurement -->
+            <div class="bg-white p-4 rounded team-card">
+              <div class="flex items-center gap-3">
+                <div class="round-avatar" style="background:#0ea5a6">RK</div>
+                <div>
+                  <div class="font-semibold text-lg">name of employee</div>
+                  <div class="text-sm text-slate-600">Logistics & Procurement</div>
+                </div>
+              </div>
+              <div class="mt-2 text-sm text-slate-600">Handles sourcing, vendor relations and deliveries.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PACKAGING -->
+      <section id="packaging" class="section hidden-section mt-6">
+        <h1 class="text-2xl font-bold about-heading">Packaging & Our Process</h1>
+        <p class="mt-2 text-slate-700 about-center" style="max-width:900px;">Our process focuses on gentle, natural handling from farm to finished powder, preserving nutrition and avoiding chemical treatments. Below is a visual flow of the steps to make it easier to follow.</p>
+
+        <div class="mt-6 bg-white p-6 rounded card-shadow">
+          <!-- Inline SVG flowchart (simple, responsive) -->
+          <div class="flow-chart">
+            <svg viewBox="0 0 1000 360" width="100%" height="360" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <!-- Boxes -->
+              <rect x="40" y="30" width="180" height="80" class="flow-box" rx="12" fill="#fff7ed" stroke="#ffd8b5"></rect>
+              <text x="130" y="80" text-anchor="middle" font-size="14" fill="#92400e" font-weight="700">Harvest & Selection</text>
+
+              <rect x="260" y="30" width="180" height="80" class="flow-box" rx="12" fill="#eefdf3" stroke="#bbf7d0"></rect>
+              <text x="350" y="80" text-anchor="middle" font-size="14" fill="#065f46" font-weight="700">Cleaning & Sorting</text>
+
+              <rect x="480" y="30" width="180" height="80" class="flow-box" rx="12" fill="#fff3e0" stroke="#ffd8b5"></rect>
+              <text x="570" y="80" text-anchor="middle" font-size="14" fill="#92400e" font-weight="700">Gentle Drying</text>
+
+              <rect x="700" y="30" width="220" height="80" class="flow-box" rx="12" fill="#f0f9ff" stroke="#bfdbfe"></rect>
+              <text x="810" y="80" text-anchor="middle" font-size="14" fill="#0c4a6e" font-weight="700">Grinding & Sieving</text>
+
+              <!-- Arrows first row -->
+              <defs>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+                  <path d="M0,0 L10,5 L0,10 z" fill="#cbd5e1" />
+                </marker>
+              </defs>
+              <line x1="220" y1="70" x2="260" y2="70" stroke="#e5e7eb" stroke-width="2" marker-end="url(#arrow)" />
+              <line x1="440" y1="70" x2="480" y2="70" stroke="#e5e7eb" stroke-width="2" marker-end="url(#arrow)" />
+              <line x1="660" y1="70" x2="700" y2="70" stroke="#e5e7eb" stroke-width="2" marker-end="url(#arrow)" />
+
+              <!-- Lower row -->
+              <rect x="160" y="170" width="220" height="80" class="flow-box" rx="12" fill="#ffffff" stroke="#e6eeff"></rect>
+              <text x="270" y="215" text-anchor="middle" font-size="14" fill="#0b3b6b" font-weight="700">Quality Checks</text>
+
+              <rect x="420" y="170" width="220" height="80" class="flow-box" rx="12" fill="#fffaf0" stroke="#ffe7c2"></rect>
+              <text x="530" y="215" text-anchor="middle" font-size="14" fill="#744210" font-weight="700">Packaging & Labelling</text>
+
+              <rect x="680" y="170" width="220" height="80" class="flow-box" rx="12" fill="#f8fff4" stroke="#d1f7d8"></rect>
+              <text x="790" y="215" text-anchor="middle" font-size="14" fill="#14532d" font-weight="700">Distribution</text>
+
+              <!-- Arrows connecting rows -->
+              <line x1="270" y1="110" x2="270" y2="170" stroke="#e5e7eb" stroke-width="2" marker-end="url(#arrow)" />
+              <line x1="570" y1="110" x2="570" y2="170" stroke="#e5e7eb" stroke-width="2" marker-end="url(#arrow)" />
+              <line x1="810" y1="110" x2="810" y2="170" stroke="#e5e7eb" stroke-width="2" marker-end="url(#arrow)" />
+
+              <!-- Notes under chart -->
+              <text x="500" y="330" text-anchor="middle" font-size="12" fill="#4b5563">Process flow from farm to shelf — no chemical preservatives, traceability via QR codes</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="section hidden-section mt-6">
+        <h1 class="text-2xl font-bold">Contact Us</h1>
+        <div class="mt-3 grid md:grid-cols-2 gap-6">
+          <div>
+            <p class="text-slate-700">Email: <a href="mailto:vvhpagrofoodllp2025@gmail.com" class="text-[var(--brand-green)]">vvhpagrofoodllp2025@gmail.com</a></p>
+            <p class="mt-2 text-slate-700">Address: 101/4, Khodad Road, Narayangaon, Pune (India)</p>
+            <p class="mt-4 text-slate-700">Call: +91-XXXXXXXXXX</p>
+
+            <form id="contact-form" class="mt-4 space-y-3 max-w-xl" onsubmit="event.preventDefault(); alert('Thanks — we will contact you soon.');">
+              <input class="w-full border p-2 rounded" placeholder="Name" required>
+              <input class="w-full border p-2 rounded" placeholder="Email" required>
+              <textarea class="w-full border p-2 rounded" placeholder="Message" required></textarea>
+              <button class="px-4 py-2 bg-[var(--brand-orange)] text-white rounded">Send Message</button>
+            </form>
+          </div>
+
+          <div>
+            <h3 class="font-semibold">Visit / Delivery Area</h3>
+            <div class="mt-3 border rounded overflow-hidden" style="min-height:260px;">
+              <!-- Google Maps iframe (centered on Pune/Narayangaon). Replace API embed if needed -->
+              <iframe
+                src="https://www.google.com/maps?q=Narayangaon%20Pune&output=embed"
+                style="width:100%;height:100%;border:0;"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="NutriDry location"></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-12 bg-white/90">
+    <div class="max-w-6xl mx-auto p-6 grid md:grid-cols-3 gap-4">
+      <div>
+        <div class="flex items-center gap-3">
+          <img src="/resources/nutridry-mark.png" alt="NutriDry" class="h-12" onerror="this.style.display='none'">
+          <div>
+            <div class="font-semibold">NutriDry</div>
+            <div class="text-sm text-gray-600">Eat smart, live strong</div>
+          </div>
+        </div>
+        <p class="mt-3 text-sm">Healthy, natural, shelf-stable powders brought to your kitchen.</p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold">Contact</h4>
+        <p class="mt-2">VVHP Agro Food LLP<br>101/4 Khodad Road, Narayangaon, Pune (India)</p>
+        <p class="mt-2">Email: <a href="mailto:vvhpagrofoodllp2025@gmail.com" class="text-[var(--brand-green)]">vvhpagrofoodllp2025@gmail.com</a></p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold">Follow</h4>
+        <div class="flex gap-3 mt-2">
+          <a href="#" aria-label="Instagram" class="text-sm">Instagram</a>
+          <a href="#" aria-label="Facebook" class="text-sm">Facebook</a>
+          <a href="#" aria-label="YouTube" class="text-sm">YouTube</a>
+        </div>
+        <div class="mt-4 text-sm">FSSAI Code: <strong id="fssai">FSSAI-1234567890</strong></div>
+      </div>
+    </div>
+    <div class="text-center py-3 text-sm">© <span id="year"></span> VVHP Agro Food LLP — NutriDry. All rights reserved.</div>
+  </footer>
+
+  <!-- Floating AI Chat placeholder -->
+  <div id="ai-widget" class="fixed right-4 bottom-4">
+    <button id="ai-open" class="bg-[var(--brand-green)] text-white px-4 py-3 rounded-full shadow-lg">AI Chat</button>
+  </div>
+
+  <!-- AI Modal -->
+  <div id="ai-modal" class="fixed inset-0 flex items-center justify-center bg-black/40 hidden">
+    <div class="bg-white rounded-lg w-11/12 max-w-md p-4">
+      <div class="flex justify-between items-center">
+        <h3 class="font-semibold">AI Chat — Coming soon</h3>
+        <button id="ai-close" class="text-gray-500">✕</button>
+      </div>
+      <p class="mt-2 text-sm">We're adding chat support. Submit a question and we'll review it.</p>
+      <input id="ai-q" placeholder="Ask a question..." class="mt-3 w-full border p-2 rounded" />
+      <div class="mt-3 flex justify-end">
+        <button id="ai-send" class="px-4 py-2 bg-[var(--brand-orange)] text-white rounded">Send</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Single-file JS -->
+<script>
+/* ---------------------------
+   Configuration
+   --------------------------- */
+/*
+  If you run the optional backend API (see README.md), set API_BASE to your API origin (e.g. "http://localhost:4000")
+  Otherwise, the page will fall back to using the local PRODUCTS array below.
+*/
+const API_BASE = ""; // e.g. "http://localhost:4000"
+
+/* ---------------------------
+   Product data (fallback local)
+   --------------------------- */
+const PRODUCTS = [
+  { id:'moringa', name:'Moringa Powder', short:'Superfood for immunity & energy', prices:{'100g':120,'500g':550,'1kg':1000}, imageAlt:'Moringa Powder', description:'100% natural moringa powder. Rich in vitamins, minerals and antioxidants. Ideal for smoothies, soups and daily nutrition.', fssai:'FSSAI-1234567890' },
+  { id:'garlic', name:'Garlic Powder', short:'Pure flavor & health benefits', prices:{'100g':80,'500g':350,'1kg':650}, imageAlt:'Garlic Powder', description:'Premium dehydrated garlic powder. Enhances flavor with natural goodness.', fssai:'FSSAI-1234567890' },
+  { id:'tomato', name:'Tomato Powder', short:'Rich in antioxidants', prices:{'100g':90,'500g':420,'1kg':780}, imageAlt:'Tomato Powder', description:'Concentrated tomato powder for soups, sauces and seasonings.', fssai:'FSSAI-1234567890' },
+  { id:'spinach', name:'Spinach Powder', short:'Iron-rich green nutrition', prices:{'100g':100,'500g':480,'1kg':900}, imageAlt:'Spinach Powder', description:'Dried and powdered spinach to boost iron and energy.', fssai:'FSSAI-1234567890' },
+  { id:'onion', name:'Onion Powder', short:'Natural sweet-savory flavor', prices:{'100g':95,'500g':450,'1kg':850}, imageAlt:'Onion Powder', description:'Dehydrated onion powder for easy seasoning and long shelf life.', fssai:'FSSAI-1234567890' },
+  { id:'ginger', name:'Ginger Powder', short:'Warm spice & digestive support', prices:{'100g':85,'500g':380,'1kg':700}, imageAlt:'Ginger Powder', description:'Aromatic ginger powder, perfect for teas, curries and marinades.', fssai:'FSSAI-1234567890' },
+  { id:'beetroot', name:'Beetroot Powder', short:'Natural color & nutrition', prices:{'100g':140,'500g':650,'1kg':1200}, imageAlt:'Beetroot Powder', description:'Vibrant beetroot powder for smoothies and natural coloring.', fssai:'FSSAI-1234567890' },
+  { id:'coriander', name:'Coriander Powder', short:'Classic spice', prices:{'100g':70,'500g':320,'1kg':600}, imageAlt:'Coriander Powder', description:'Finely ground coriander for everyday cooking.', fssai:'FSSAI-1234567890' },
+  { id:'curry', name:'Curry Powder', short:'Blend of spices', prices:{'100g':120,'500g':560,'1kg':1050}, imageAlt:'Curry Powder', description:'Traditional curry blend crafted for balanced flavor.', fssai:'FSSAI-1234567890' }
+];
+
+/* ---------------------------
+   LocalStorage cart helpers
+   --------------------------- */
+function getCart(){ try { return JSON.parse(localStorage.getItem('nd_cart') || '[]'); } catch(e){ return []; } }
+function saveCart(cart){ localStorage.setItem('nd_cart', JSON.stringify(cart)); updateCartCount(); }
+function clearCart(){ localStorage.removeItem('nd_cart'); updateCartCount(); }
+function addToCart(item){
+  const cart = getCart();
+  const idx = cart.findIndex(i => i.id===item.id && i.size===item.size);
+  if(idx>-1) cart[idx].qty += item.qty;
+  else cart.push(item);
+  saveCart(cart);
+}
+
+/* ---------------------------
+   Data fetching (if API_BASE set)
+   --------------------------- */
+async function fetchProductsFromApi(){
+  try{
+    const res = await fetch(API_BASE + '/api/products');
+    if(!res.ok) throw new Error('Failed');
+    return await res.json();
+  }catch(e){
+    console.warn('API products fetch failed, falling back to local PRODUCTS');
+    return PRODUCTS;
+  }
+}
+async function fetchProductFromApi(id){
+  try{
+    const res = await fetch(API_BASE + '/api/products/' + id);
+    if(!res.ok) throw new Error('Failed');
+    return await res.json();
+  }catch(e){
+    console.warn('API product fetch failed, falling back to local product');
+    return PRODUCTS.find(p=>p.id===id);
+  }
+}
+
+/* ---------------------------
+   Renderers
+   --------------------------- */
+async function renderHomeProducts(){
+  const el = document.getElementById('home-products');
+  if(!el) return;
+  const all = API_BASE ? await fetchProductsFromApi() : PRODUCTS;
+  const featured = ['moringa','garlic','tomato'].map(id => all.find(p=>p.id===id)).filter(Boolean);
+  el.innerHTML = featured.map(p => `
+    <div class="bg-white rounded card-shadow p-4">
+      <div class="w-full h-36 bg-amber-50 rounded flex items-center justify-center">${p.imageAlt}</div>
+      <h3 class="mt-3 font-semibold">${p.name}</h3>
+      <p class="text-sm text-slate-600">${p.short}</p>
+      <div class="mt-2 font-medium">From ₹${p.prices['100g']}</div>
+      <div class="mt-3 flex gap-2">
+        <a href="#product=${p.id}" onclick="router('#product=${p.id}')" class="px-3 py-2 border rounded">View</a>
+        <button class="add-btn px-3 py-2 bg-[var(--brand-green)] text-white rounded" data-id="${p.id}">Add</button>
+      </div>
+    </div>
+  `).join('');
+  document.querySelectorAll('.add-btn').forEach(btn=> btn.addEventListener('click', ()=> {
+    const id = btn.dataset.id; const p = PRODUCTS.find(x=>x.id===id);
+    addToCart({id:p.id,name:p.name,size:'100g',price:p.prices['100g'],qty:1});
+    toast('Added to cart');
+  }));
+}
+
+async function renderProductsList(){
+  const el = document.getElementById('products-list');
+  if(!el) return;
+  const all = API_BASE ? await fetchProductsFromApi() : PRODUCTS;
+  el.innerHTML = all.map(p => `
+    <div class="bg-white rounded card-shadow p-4">
+      <div class="w-full h-36 bg-gray-50 rounded flex items-center justify-center">${p.imageAlt}</div>
+      <h3 class="mt-3 font-semibold">${p.name}</h3>
+      <p class="text-sm text-slate-600">${p.short}</p>
+      <div class="mt-2">From ₹${p.prices['100g']}</div>
+      <div class="mt-3 flex gap-2">
+        <a href="#product=${p.id}" onclick="router('#product=${p.id}')" class="px-3 py-2 border rounded">View</a>
+        <button class="add-btn small px-3 py-2 bg-[var(--brand-green)] text-white rounded" data-id="${p.id}">Add</button>
+      </div>
+    </div>
+  `).join('');
+  document.querySelectorAll('.add-btn.small').forEach(btn=> btn.addEventListener('click', ()=> {
+    const id = btn.dataset.id; const p = PRODUCTS.find(x=>x.id===id);
+    addToCart({id:p.id,name:p.name,size:'100g',price:p.prices['100g'],qty:1});
+    toast('Added to cart');
+  }));
+}
+
+async function renderProductDetail(id){
+  // fetch single product from API if configured
+  const p = API_BASE ? await fetchProductFromApi(id) : PRODUCTS.find(x=>x.id===id);
+  const container = document.getElementById('product-detail');
+  if(!p || !container){ container.innerHTML = '<p>Product not found.</p>'; return; }
+  // Product detail area
+  container.innerHTML = `
+    <div class="grid md:grid-cols-2 gap-6">
+      <div>
+        <div class="w-full h-64 bg-gray-50 rounded border flex items-center justify-center text-slate-700">${p.imageAlt}</div>
+        <div class="mt-3">
+          <h4 class="font-semibold">Packaging & QR (Reserved)</h4>
+          <div class="mt-2 p-3 border rounded">QR code placeholder & packaging mockup here.</div>
+        </div>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold">${p.name}</h2>
+        <p class="mt-2 text-sm text-slate-600">${p.short}</p>
+        <p class="mt-4 text-slate-700">${p.description}</p>
+        <div class="mt-4">
+          <label class="block">Choose Size</label>
+          <select id="size-select" class="border p-2 rounded mt-1 w-full">
+            ${Object.keys(p.prices).map(size => `<option value="${size}">${size} — ₹${p.prices[size]}</option>`).join('')}
+          </select>
+        </div>
+        <div class="mt-3 flex items-center gap-3">
+          <label>Qty</label>
+          <input id="qty" type="number" min="1" value="1" class="w-20 border p-2 rounded">
+        </div>
+        <div class="mt-4 flex gap-3">
+          <button id="add-to-cart" class="px-4 py-2 bg-[var(--brand-green)] text-white rounded">Add to Cart</button>
+          <button onclick="router('#cart')" class="px-4 py-2 border rounded">Go to Cart</button>
+        </div>
+        <div class="mt-4 text-sm">FSSAI: <span id="prod-fssai">${p.fssai || 'FSSAI-XXXXXXXX'}</span></div>
+      </div>
+    </div>
+  `;
+  document.getElementById('add-to-cart').addEventListener('click', ()=>{
+    const size = document.getElementById('size-select').value;
+    const qty = parseInt(document.getElementById('qty').value) || 1;
+    addToCart({id: p.id, name: p.name, size, price: p.prices[size], qty});
+    toast('Added to cart');
+  });
+
+  // Render related/other products like Flipkart style below
+  const relatedEl = document.getElementById('product-related');
+  const all = API_BASE ? await fetchProductsFromApi() : PRODUCTS;
+  const others = all.filter(x=>x.id!==p.id);
+  relatedEl.innerHTML = `
+    <h3 class="text-xl font-semibold mb-3">You may also like</h3>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      ${others.map(op => `
+        <div class="bg-white rounded card-shadow p-3">
+          <div class="w-full h-28 bg-gray-50 rounded flex items-center justify-center">${op.imageAlt}</div>
+          <div class="mt-2 font-semibold">${op.name}</div>
+          <div class="text-sm text-slate-600">${op.short}</div>
+          <div class="mt-2 font-medium">From ₹${op.prices['100g']}</div>
+          <div class="mt-3 flex gap-2">
+            <a href="#product=${op.id}" onclick="router('#product=${op.id}')" class="px-3 py-2 border rounded">View</a>
+            <button class="add-related px-3 py-2 bg-[var(--brand-green)] text-white rounded" data-id="${op.id}">Add</button>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  relatedEl.querySelectorAll('.add-related').forEach(btn=>{
+    btn.addEventListener('click', ()=> {
+      const id = btn.dataset.id; const p = PRODUCTS.find(x=>x.id===id);
+      addToCart({id:p.id,name:p.name,size:'100g',price:p.prices['100g'],qty:1});
+      toast('Added to cart');
+    });
+  });
+}
+
+async function renderCart(){
+  const container = document.getElementById('cart-items');
+  if(!container) return;
+  const cart = getCart();
+  if(!cart.length){
+    container.innerHTML = '<p>Your cart is empty. <a href="#products" onclick="router(\\\'#products\\\')" class="text-[var(--brand-orange)]">Shop now</a></p>';
+    document.getElementById('cart-total').textContent = '0';
+    return;
+  }
+  container.innerHTML = cart.map((it, idx) => `
+    <div class="flex items-center gap-4 bg-white p-3 rounded">
+      <div class="w-24 h-24 bg-gray-50 rounded border flex items-center justify-center">${it.name}</div>
+      <div class="flex-1">
+        <div class="font-semibold">${it.name}</div>
+        <div class="text-sm">Size: ${it.size}</div>
+        <div class="text-sm">Price: ₹${it.price}</div>
+      </div>
+      <div class="flex items-center gap-2">
+        <input type="number" data-idx="${idx}" value="${it.qty}" min="1" class="w-16 border p-1 rounded qty-input">
+        <button data-idx="${idx}" class="remove-btn px-3 py-2 bg-red-500 text-white rounded">Remove</button>
+      </div>
+    </div>
+  `).join('');
+  const total = cart.reduce((s,i)=>s + (i.price*i.qty),0);
+  document.getElementById('cart-total').textContent = total;
+  document.querySelectorAll('.qty-input').forEach(inp=>{
+    inp.addEventListener('change', ()=>{
+      const idx = parseInt(inp.dataset.idx);
+      const v = parseInt(inp.value) || 1;
+      const c = getCart(); c[idx].qty = v; saveCart(c); renderCart();
+    });
+  });
+  document.querySelectorAll('.remove-btn').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const idx = parseInt(b.dataset.idx);
+      const c = getCart(); c.splice(idx,1); saveCart(c); renderCart();
+    });
+  });
+}
+
+/* ---------------------------
+   Cart count UI update
+   --------------------------- */
+function updateCartCount(){
+  const cart = getCart();
+  const count = cart.reduce((s,i)=>s+i.qty,0);
+  const el = document.getElementById('cart-count'); if(el) el.textContent = count;
+  const em = document.getElementById('cart-count-m'); if(em) em.textContent = count;
+}
+
+/* ---------------------------
+   Toast (lightweight)
+   --------------------------- */
+function toast(msg){
+  const id = 'nd-toast';
+  let t = document.getElementById(id);
+  if(!t){
+    t = document.createElement('div');
+    t.id = id;
+    t.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 bg-black/80 text-white px-4 py-2 rounded';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  setTimeout(()=> t.style.opacity='0', 1800);
+}
+
+/* ---------------------------
+   Router (hash-based)
+   --------------------------- */
+function hideAllSections(){ document.querySelectorAll('.section').forEach(s => s.classList.add('hidden-section')); }
+function showSection(id){ hideAllSections(); const el = document.querySelector(id); if(el) el.classList.remove('hidden-section'); window.scrollTo({top:0,behavior:'smooth'}); }
+function router(hash){ location.hash = hash; handleRoute(); }
+function handleRoute(){
+  const h = location.hash || '#home';
+  updateCartCount();
+  renderHomeProducts();
+  renderProductsList();
+  if(h.startsWith('#product=')){
+    const id = h.split('=')[1];
+    showSection('#product-page');
+    renderProductDetail(id);
+    return;
+  }
+  switch(h){
+    case '#home': showSection('#home'); break;
+    case '#products': showSection('#products'); break;
+    case '#cart': showSection('#cart'); renderCart(); break;
+    case '#checkout': showSection('#checkout'); break;
+    case '#about': showSection('#about'); break;
+    case '#packaging': showSection('#packaging'); break;
+    case '#contact': showSection('#contact'); break;
+    default:
+      if(h.startsWith('#product=')) { const id = h.split('=')[1]; showSection('#product-page'); renderProductDetail(id); }
+      else { showSection('#home'); }
+  }
+}
+
+/* ---------------------------
+   Checkout handling
+   --------------------------- */
+document.addEventListener('submit', function(ev){
+  if(ev.target && ev.target.id === 'checkout-form'){
+    ev.preventDefault();
+    const name = document.getElementById('c_name').value.trim();
+    const mobile = document.getElementById('c_mobile').value.trim();
+    const email = document.getElementById('c_email').value.trim();
+    const address = document.getElementById('c_address').value.trim();
+    const payment = document.getElementById('c_payment').value;
+    if(!name || !mobile || !address){ alert('Please fill required fields'); return; }
+    const cart = getCart();
+    if(!cart.length){ alert('Your cart is empty.'); router('#products'); return; }
+
+    const orderId = 'ND' + Date.now();
+    const total = cart.reduce((s,i)=> s + (i.price * i.qty), 0);
+    const order = { orderId, date: new Date().toLocaleString(), name, mobile, email, address, payment, items: cart, total };
+
+    // If API backend available, POST order to server
+    if(API_BASE){
+      fetch(API_BASE + '/api/orders', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(order)
+      }).then(res=>res.json()).then(data=>{
+        clearCart();
+        updateCartCount();
+        showReceipt(order);
+        alert('Order placed successfully! Order ID: ' + orderId);
+      }).catch(err=>{
+        console.warn('Order API failed, continuing local flow', err);
+        setTimeout(()=>{ clearCart(); updateCartCount(); showReceipt(order); alert('Order placed successfully! Order ID: ' + orderId); },400);
+      });
+      return;
+    }
+
+    // local simulation
+    setTimeout(()=>{
+      clearCart();
+      updateCartCount();
+      showReceipt(order);
+      alert('Order placed successfully! Order ID: ' + orderId);
+    }, 400);
+  }
+});
+
+/* ---------------------------
+   Receipt
+   --------------------------- */
+function showReceipt(order){
+  const r = document.getElementById('receipt');
+  if(!r) return;
+  r.classList.remove('hidden');
+  r.innerHTML = `
+    <h2 class="text-xl font-semibold">Payment Receipt</h2>
+    <p class="mt-1">Order ID: <strong>${order.orderId}</strong></p>
+    <p>Date: ${order.date}</p>
+    <p class="mt-3 font-medium">Shipping To:</p>
+    <p>${escapeHtml(order.name)} — ${escapeHtml(order.mobile)}</p>
+    <p>${escapeHtml(order.address)}</p>
+    <div class="mt-3">
+      <h3 class="font-medium">Items</h3>
+      <ul class="mt-2 space-y-1">
+        ${order.items.map(it => `<li>${escapeHtml(it.name)} (${escapeHtml(it.size)}) x ${it.qty} — ₹${it.price * it.qty}</li>`).join('')}
+      </ul>
+    </div>
+    <div class="mt-3 font-semibold">Total Paid: ₹${order.total}</div>
+    <div class="mt-4 flex gap-3">
+      <button id="print-btn" class="px-4 py-2 bg-[var(--brand-orange)] text-white rounded">Print / Save PDF</button>
+      <button class="px-4 py-2 border rounded" onclick="router('#home')">Back to Home</button>
+    </div>
+  `;
+  document.getElementById('print-btn').addEventListener('click', ()=> window.print());
+}
+
+/* ---------------------------
+   Small helpers & init
+   --------------------------- */
+function escapeHtml(unsafe){ return (unsafe+'').replace(/[&<"'>]/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]; }); }
+document.getElementById('ai-open').addEventListener('click', ()=> document.getElementById('ai-modal').classList.remove('hidden'));
+document.getElementById('ai-close').addEventListener('click', ()=> document.getElementById('ai-modal').classList.add('hidden'));
+document.getElementById('ai-send').addEventListener('click', ()=>{ const q = document.getElementById('ai-q').value.trim(); if(q){ alert('Thanks! Your question has been recorded.'); document.getElementById('ai-q').value=''; document.getElementById('ai-modal').classList.add('hidden'); } });
+
+function toggleMobileMenu(){ const el = document.getElementById('mobile-nav'); if(!el) return; el.classList.toggle('hidden'); }
+
+/* init */
+window.addEventListener('hashchange', handleRoute);
+window.addEventListener('load', ()=>{
+  document.getElementById('year').textContent = new Date().getFullYear();
+  renderHomeProducts();
+  renderProductsList();
+  handleRoute();
+  updateCartCount();
+});
+</script>
+
+</body>
+</html>
